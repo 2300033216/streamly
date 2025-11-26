@@ -43,8 +43,16 @@ public class AuthController {
                     .body(Map.of("error", "Username already taken"));
         }
 
+        // ✅ optional: also ensure email is unique (requires repo method existsByEmail)
+        if (userRepository.existsByEmail(req.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", "Email already in use"));
+        }
+
         User u = new User();
         u.setUsername(req.getUsername());
+        u.setEmail(req.getEmail());                                  // ✅ set email
         u.setPassword(passwordEncoder.encode(req.getPassword()));
 
         userRepository.save(u);

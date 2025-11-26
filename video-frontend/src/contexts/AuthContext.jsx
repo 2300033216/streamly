@@ -1,3 +1,4 @@
+// src/contexts/AuthContext.jsx
 import React, { createContext, useState, useEffect } from 'react'
 import api from '../api/api'
 
@@ -20,8 +21,9 @@ export function AuthProvider({ children }) {
     setUser({ username })
   }
 
-  const signup = async (username, password) => {
-    await api.post('/auth/signup', { username, password })
+  // updated: now accepts email too
+  const signup = async (username, password, email) => {
+    await api.post('/auth/signup', { username, password, email })
   }
 
   const logout = () => {
