@@ -53,7 +53,7 @@ public class AuthController {
         u.setUsername(req.getUsername());
         u.setEmail(req.getEmail());
         u.setPassword(passwordEncoder.encode(req.getPassword()));
-        u.setRole("ROLE_USER"); // ✅ every new user is normal USER
+        u.setRole("ROLE_USER"); // default
 
         userRepository.save(u);
 
@@ -74,7 +74,6 @@ public class AuthController {
 
         String token = jwtUtils.generateToken(user.getUsername(), user.getRole());
 
-        // ✅ return role as well, so frontend can adjust UI
         return ResponseEntity.ok(
                 Map.of(
                         "token", token,

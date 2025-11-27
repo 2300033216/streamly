@@ -10,6 +10,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
+
     private final Key key;
     private final long expirationMs;
 
@@ -19,7 +20,7 @@ public class JwtUtils {
         this.expirationMs = expirationMs;
     }
 
-    // NEW: include role as claim
+    // NEW: username + role
     public String generateToken(String username, String role) {
         Date now = new Date();
         Date exp = new Date(now.getTime() + expirationMs);
@@ -34,14 +35,21 @@ public class JwtUtils {
     }
 
     public String getUsernameFromJwt(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build()
-                .parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
-    // helper if needed later
     public String getRoleFromJwt(String token) {
-        Object r = Jwts.parserBuilder().setSigningKey(key).build()
-                .parseClaimsJws(token).getBody().get("role");
+        Object r = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role");
         return r != null ? r.toString() : null;
     }
 

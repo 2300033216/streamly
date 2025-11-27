@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Read base URL from .env (VITE_API_URL), fallback to backend default
-const raw = import.meta.env.VITE_API_URL || 'http://localhost:2222/api'
+const raw = import.meta.env.VITE_API_URL || 'http://localhost:4545/api'
 
 // Ensure final URL always ends with /api
 // Example: if raw = http://localhost:2222 → becomes http://localhost:2222/api

@@ -22,7 +22,7 @@ public class User {
     @Column(nullable = false)
     private String password; // store hashed (BCrypt)
 
-    // NEW: role column, default USER
+    // NEW: role field
     @Column(nullable = false)
     private String role = "ROLE_USER";
 

@@ -16,7 +16,7 @@ services:
     image: niloufershaik/docker-video-backend:latest
     container_name: springboot
     ports:
-      - "2222:2222"
+      - "4545:2222"
     depends_on:
       - mysqldb
     restart: on-failure
