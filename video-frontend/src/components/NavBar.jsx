@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 
 export default function NavBar() {
-  const { user, logout } = useContext(AuthContext)
+  const { user, logout, isAdmin } = useContext(AuthContext)
   const nav = useNavigate()
 
   const toggleDark = () => {
@@ -25,6 +25,14 @@ export default function NavBar() {
         {user ? (
           <>
             <Link to="/upload">Upload</Link>
+
+            {/* small role badge */}
+            {isAdmin && (
+              <span className="badge role-badge">
+                Admin
+              </span>
+            )}
+
             <button
               onClick={() => { logout(); nav('/'); }}
               className="btn-link"

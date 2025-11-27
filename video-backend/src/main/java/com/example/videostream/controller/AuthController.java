@@ -43,7 +43,6 @@ public class AuthController {
                     .body(Map.of("error", "Username already taken"));
         }
 
-        // ✅ optional: also ensure email is unique (requires repo method existsByEmail)
         if (userRepository.existsByEmail(req.getEmail())) {
             return ResponseEntity
                     .badRequest()
@@ -52,8 +51,9 @@ public class AuthController {
 
         User u = new User();
         u.setUsername(req.getUsername());
-        u.setEmail(req.getEmail());                                  // ✅ set email
+        u.setEmail(req.getEmail());
         u.setPassword(passwordEncoder.encode(req.getPassword()));
+        u.setRole("ROLE_USER"); // ✅ every new user is normal USER
 
         userRepository.save(u);
 
@@ -69,8 +69,18 @@ public class AuthController {
                 )
         );
 
-        String token = jwtUtils.generateToken(req.getUsername());
+        User user = userRepository.findByUsername(req.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return ResponseEntity.ok(Map.of("token", token));
+        String token = jwtUtils.generateToken(user.getUsername(), user.getRole());
+
+        // ✅ return role as well, so frontend can adjust UI
+        return ResponseEntity.ok(
+                Map.of(
+                        "token", token,
+                        "username", user.getUsername(),
+                        "role", user.getRole()
+                )
+        );
     }
 }

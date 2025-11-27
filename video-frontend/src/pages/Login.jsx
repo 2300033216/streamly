@@ -6,7 +6,6 @@ import bgVideo from '../assets/auth-bg.mp4'
 import './auth.css'
 
 export default function Login() {
-
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const { login } = useContext(AuthContext)
@@ -18,6 +17,7 @@ export default function Login() {
       await login(username, password)
       nav('/')
     } catch (err) {
+      console.error(err)
       alert('Login failed')
     }
   }
@@ -36,7 +36,6 @@ export default function Login() {
 
       <div className="auth-overlay" />
 
-      {/* keep your existing card styles + new auth-card */}
       <div className="auth-card card">
         <h2>Login</h2>
 

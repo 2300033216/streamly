@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import api from '../api/api'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../contexts/AuthContext'
 
 export default function VideoUpload() {
-
   const [file, setFile] = useState(null)
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
   const nav = useNavigate()
+  const { user } = useContext(AuthContext)
+
+  if (!user) {
+    return (
+      <div className="card">
+        <h2>Upload video</h2>
+        <p className="muted">You need to log in to upload videos.</p>
+      </div>
+    )
+  }
 
   const submit = async (e) => {
     e.preventDefault()
@@ -26,6 +36,7 @@ export default function VideoUpload() {
       alert('Uploaded')
       nav('/')
     } catch (err) {
+      console.error(err)
       alert('Upload failed')
     }
   }

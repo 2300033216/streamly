@@ -373,6 +373,25 @@ body.dark .video-card .meta {
   z-index: 999;
   transition: transform .15s ease, box-shadow .15s ease;
 }
+.badge.role-badge {
+  margin-left: 0.5rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: #f97316;
+  color: #fff;
+}
+.card-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-link.danger {
+  color: #dc2626;
+}
+
 
 .fab:hover {
   transform: scale(1.1);
