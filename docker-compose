@@ -1,0 +1,41 @@
+services:
+  mysqldb:
+    image: mysql:8
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: videodb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - springboot-mysql-net
+
+  backend:
+    image: niloufershaik/docker-video-backend:latest
+    container_name: springboot
+    ports:
+      - "2222:2222"
+    depends_on:
+      - mysqldb
+    restart: on-failure
+    networks:
+      - springboot-mysql-net
+
+  frontend:
+    image: niloufershaik/docker-video-frontend:latest
+    container_name: react
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: on-failure
+    networks:
+      - springboot-mysql-net
+
+volumes:
+  mysql_data:
+
+networks:
+  springboot-mysql-net:
